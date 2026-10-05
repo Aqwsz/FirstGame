@@ -1,4 +1,4 @@
-from Characters.Character import Character
+from Characters.character import Character
 
 class Hero(Character):
     def __init__(self):

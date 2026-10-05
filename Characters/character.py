@@ -1,4 +1,4 @@
-from Actions.Import_All_Actions import attack, heal
+from Actions.import_all_actions import attack, heal
 
 class Character:
     def is_alive(self):

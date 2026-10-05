@@ -1,5 +1,6 @@
 from Levels.level_1 import fight1
-from Characters.Heroes.Hero import Hero
+from Levels.level_2 import fight2
+from Characters.Heroes.hero import Hero
 
 def main():
     hero = Hero()
@@ -11,14 +12,22 @@ def main():
     print()
     print("Your hero enters the dungeon...")
 
-    survived = fight1(hero)
-
-    if survived:
-        print()
-        print("You survived Fight 1!")
-    else:
+    if not fight1(hero):
         print()
         print("Game Over")
+        return
+
+    print()
+    print("You survived Fight 1!")
+    print()
+
+    if not fight2(hero):
+        print()
+        print("Game Over")
+        return
+
+    print()
+    print("You survived Fight 2!")
 
 
 if __name__ == "__main__":

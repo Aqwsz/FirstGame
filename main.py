@@ -1,16 +1,6 @@
-from Levels.level_1 import fight1
-from Levels.level_2 import fight2
-from Levels.level_3 import fight3
-from Levels.level_4 import fight4
-from Levels.level_5 import fight5
-from Levels.level_6 import fight6
-from Levels.level_7 import fight7
-from Levels.level_8 import fight8
-from Levels.level_9 import fight9
-from Levels.level_10 import fight10
+from Levels.levels import LEVELS
+from Levels.fight import fight
 from Characters.Heroes.hero import Hero
-
-LEVELS = [fight1, fight2, fight3, fight4, fight5, fight6, fight7, fight8, fight9, fight10]
 
 
 def main():
@@ -23,21 +13,33 @@ def main():
     print()
     print("Your hero enters the dungeon...")
 
-    for number, level in enumerate(LEVELS, start=1):
-        print()
-        print(f"=== FIGHT {number} ===")
-
-        if not level(hero):
+    while hero.prestige < 2:
+        for level in LEVELS:
+            number = level["level"]
             print()
-            print("Game Over")
-            return
+            if hero.prestige > 0:
+                print(f"=== PRESTIGE {hero.prestige} - FIGHT {number} ===")
+            else:
+                print(f"=== FIGHT {number} ===")
+
+            for group in level["enemies"]:
+                for _ in range(group["count"]):
+                    enemy = group["type"]()
+                    enemy.hitpoints = enemy.total_hitpoints(hero.prestige)
+                    survive = fight(hero, enemy)
+
+                    if not survive:
+                        print()
+                        print("Game Over")
+                        return
+
+            print()
+            print(f"You survived Fight {number}!")
 
         print()
-        print(f"You survived Fight {number}!")
-
-    print()
-    print("You beat all the levels! You win!")
-
+        hero.prestige = hero.prestige + 1
+        print(f"Your prestige is now {hero.prestige}")
+    print(f"You beat prestige {hero.prestige-1}! You win!")
 
 if __name__ == "__main__":
     main()

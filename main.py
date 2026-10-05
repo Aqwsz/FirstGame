@@ -1,6 +1,7 @@
 from Levels.levels import LEVELS
 from Levels.fight import fight
 from Characters.Heroes.hero import Hero
+from Shop.skill_shop import skill_shop
 
 
 def main():
@@ -25,7 +26,7 @@ def main():
             for group in level["enemies"]:
                 for _ in range(group["count"]):
                     enemy = group["type"]()
-                    enemy.hitpoints = enemy.total_hitpoints(hero.prestige)
+                    enemy.scale_prestige(hero.prestige)
                     survive = fight(hero, enemy)
 
                     if not survive:
@@ -38,7 +39,14 @@ def main():
 
         print()
         hero.prestige = hero.prestige + 1
-        print(f"Your prestige is now {hero.prestige}")
+        hero.prestige_points = hero.prestige_points + hero.prestige
+        print(f"Your prestige is now {hero.prestige}!")
+        print(f"You gained {hero.prestige} prestige points!")
+        print(f"You have {hero.prestige_points} prestige points!")
+        print("--------------------------------")
+
+        skill_shop(hero)
+
     print(f"You beat prestige {hero.prestige-1}! You win!")
 
 if __name__ == "__main__":
